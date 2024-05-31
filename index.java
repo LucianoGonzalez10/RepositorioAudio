@@ -6,11 +6,13 @@ public class index {
     public static void main(String[] args) {
         Cancion cancion1 = new Cancion("CALL ME BABY", "Duki", "audio\\Call-Me-Baby.wav", "media/portadaCancion2.jpg");
         Cancion cancion2 = new Cancion("BAILE CHORRA SE TE CAEN LAS BALAS", "Aniasko", "audio\\pruebasAudio.wav", "media/portadaCancion1.jpg");
+        Cancion cancion3 = new Cancion("SET LIVE MDQ", "Aniasko", "audio\\pruebasAudio.wav", "media/portadaCancion1.jpg");
 
         // ARRAYLIST CANCIONES
         ArrayList<Cancion> canciones = new ArrayList<>();
         canciones.add(cancion1);
         canciones.add(cancion2);
+        canciones.add(cancion3);
         // Crear algunas playlists de ejemplo
         ArrayList<Playlist> playlists = new ArrayList<>();
         Playlist playlist1 = new Playlist("Duki", "media/portadaPlaylist1.jpg");
