@@ -4,12 +4,10 @@ import javax.swing.*;
 import javax.sound.sampled.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.net.*;
 import java.util.ArrayList;
 
-
 public class ReproductorMusica extends JFrame implements ActionListener, ChangeListener {
-    private JButton playButton, stopButton, prevButton, nextButton;
+    private JButton playPauseButton, prevButton, nextButton;
     private JLabel timeLabel, coverLabel;
     private JSlider timeSlider;
     private Clip clip;
@@ -17,9 +15,14 @@ public class ReproductorMusica extends JFrame implements ActionListener, ChangeL
     private ArrayList<Cancion> listaCanciones;
     private int currentIndex;
 
+    // Ajustar el tamaño de los íconos a 20x20 píxeles
+    private final ImageIcon playIcon = new ImageIcon(new ImageIcon(getClass().getResource("media\\play.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+    private final ImageIcon pauseIcon = new ImageIcon(new ImageIcon(getClass().getResource("media\\16427.png")).getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH));
+
     public ReproductorMusica(ArrayList<Cancion> listaCanciones) {
         this.listaCanciones = listaCanciones;
         this.currentIndex = 0;
+        this.isPlaying = false;
 
         setTitle("Reproductor de Música");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -39,13 +42,10 @@ public class ReproductorMusica extends JFrame implements ActionListener, ChangeL
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1.0;
 
-        playButton = new JButton("Play");
-        playButton.addActionListener(this);
-        controlPanel.add(playButton, gbc);
-
-        stopButton = new JButton("Stop");
-        stopButton.addActionListener(this);
-        controlPanel.add(stopButton, gbc);
+        playPauseButton = new JButton();
+        playPauseButton.setIcon(playIcon);
+        playPauseButton.addActionListener(this);
+        controlPanel.add(playPauseButton, gbc);
 
         prevButton = new JButton("Prev");
         prevButton.addActionListener(this);
@@ -73,14 +73,12 @@ public class ReproductorMusica extends JFrame implements ActionListener, ChangeL
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == playButton) {
-            if (!isPlaying) {
+        if (e.getSource() == playPauseButton) {
+            if (isPlaying) {
+                pausarCancion();
+            } else {
                 reproducirCancion();
-                isPlaying = true;
             }
-            
-        } else if (e.getSource() == stopButton) {
-            detenerCancion();
         } else if (e.getSource() == prevButton) {
             reproducirCancionAnterior();
         } else if (e.getSource() == nextButton) {
@@ -90,9 +88,12 @@ public class ReproductorMusica extends JFrame implements ActionListener, ChangeL
 
     private void reproducirCancion() {
         try {
-            clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(getClass().getResource(listaCanciones.get(currentIndex).getRuta())));
+            if (clip == null || !clip.isOpen()) {
+                clip = AudioSystem.getClip();
+                clip.open(AudioSystem.getAudioInputStream(getClass().getResource(listaCanciones.get(currentIndex).getRuta())));
+            }
             clip.start();
+            playPauseButton.setIcon(pauseIcon);
 
             new Thread(() -> {
                 while (clip.isActive()) {
@@ -110,18 +111,21 @@ public class ReproductorMusica extends JFrame implements ActionListener, ChangeL
                     }
                 }
                 isPlaying = false;
+                SwingUtilities.invokeLater(() -> playPauseButton.setIcon(playIcon));
             }).start();
 
+            isPlaying = true;
             timeSlider.setEnabled(true);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    private void detenerCancion() {
+    private void pausarCancion() {
         if (clip != null && clip.isRunning()) {
             clip.stop();
             isPlaying = false;
+            playPauseButton.setIcon(playIcon);
         }
     }
 
@@ -138,7 +142,15 @@ public class ReproductorMusica extends JFrame implements ActionListener, ChangeL
         actualizarPortada();
         reproducirCancion();
     }
-    
+
+    private void detenerCancion() {
+        if (clip != null && clip.isOpen()) {
+            clip.stop();
+            clip.close();
+            isPlaying = false;
+            playPauseButton.setIcon(playIcon);
+        }
+    }
 
     private void actualizarPortada() {
         ImageIcon icon = new ImageIcon(getClass().getResource(listaCanciones.get(currentIndex).getPortada()));
@@ -163,3 +175,4 @@ public class ReproductorMusica extends JFrame implements ActionListener, ChangeL
         }
     }
 }
+

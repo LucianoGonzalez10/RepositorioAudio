@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-
 import javax.swing.SwingUtilities;
 
 public class index {
@@ -20,8 +19,8 @@ public class index {
         Playlist playlist1 = new Playlist("Duki", "media/portadaCancion2.jpg");
         Playlist playlist2 = new Playlist("Aniasko", "media/portadaCancion1.jpg");
         Playlist playlist3 = new Playlist("Eladio Carrion", "media/portadaCancion3.jpg");
-        Playlist playlist4 = new Playlist("Eladio Carrion", "media/portadaCancion3.jpg");
-        Playlist playlist5 = new Playlist("Eladio Carrion", "media/portadaCancion3.jpg");
+        Playlist playlist4 = new Playlist("Ysy A", "media\\portadaCancion4.png");
+        Playlist playlist5 = new Playlist("Bad Bunny", "media\\portadaCancion5.jpg");
         Playlist playlist6 = new Playlist("Duki", "media/portadaCancion2.jpg");
         Playlist playlist7 = new Playlist("Aniasko", "media/portadaCancion1.jpg");
         Playlist playlist8 = new Playlist("Eladio Carrion", "media/portadaCancion3.jpg");
@@ -39,6 +38,12 @@ public class index {
                 break;
                 case "Eladio Carrion":
                 playlist3.agregarCanciones(canciones.get(i));
+                break;
+                case "Ysy A":
+                playlist4.agregarCanciones(canciones.get(i));
+                break;
+                case "Bad Bunny":
+                playlist5.agregarCanciones(canciones.get(i));
                 break;
                 default:
                     break;
