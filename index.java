@@ -7,7 +7,7 @@ public class index {
         Cancion cancion1 = new Cancion("CALL ME BABY", "Duki", "audio\\Call-Me-Baby.wav", "media/portadaCancion2.jpg");
         Cancion cancion2 = new Cancion("BAILE CHORRA SE TE CAEN LAS BALAS", "Aniasko", "audio\\pruebasAudio.wav", "media/portadaCancion1.jpg");
         Cancion cancion3 = new Cancion("SET LIVE MDQ", "Aniasko", "audio\\pruebasAudio.wav", "media/portadaCancion1.jpg");
-        // HOLAAA GIULI
+        // CHAU GIULI GRACIAS 
         // ARRAYLIST CANCIONES
         ArrayList<Cancion> canciones = new ArrayList<>();
         canciones.add(cancion1);
