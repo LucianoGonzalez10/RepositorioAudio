@@ -44,15 +44,21 @@ public class ReproductorMusica extends JFrame implements ActionListener, ChangeL
 
         playPauseButton = new JButton();
         playPauseButton.setIcon(playIcon);
+        playPauseButton.setBackground(Color.GREEN); // Establecer el color de fondo en verde
+        playPauseButton.setForeground(Color.BLACK);
         playPauseButton.addActionListener(this);
         controlPanel.add(playPauseButton, gbc);
 
         prevButton = new JButton("Prev");
         prevButton.addActionListener(this);
+        prevButton.setBackground(Color.GREEN); // Establecer el color de fondo en verde
+        prevButton.setForeground(Color.BLACK);
         controlPanel.add(prevButton, gbc);
 
         nextButton = new JButton("Next");
         nextButton.addActionListener(this);
+        nextButton.setBackground(Color.GREEN); // Establecer el color de fondo en verde
+        nextButton.setForeground(Color.BLACK);
         controlPanel.add(nextButton, gbc);
 
         add(controlPanel, BorderLayout.SOUTH);
@@ -65,6 +71,8 @@ public class ReproductorMusica extends JFrame implements ActionListener, ChangeL
         timeSlider = new JSlider(0, 100, 0);
         timeSlider.setEnabled(false);
         timeSlider.addChangeListener(this);
+        timeSlider.setBackground(Color.BLACK);
+        timeSlider.setForeground(Color.GREEN);
         add(timeSlider, BorderLayout.WEST);
 
         pack();
